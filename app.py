@@ -4,6 +4,8 @@ import requests
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, pipeline
 from datetime import datetime, timedelta
 import numpy as np
+from dotenv import load_dotenv
+import os
 
 app = FastAPI()
 
@@ -14,7 +16,7 @@ model = AutoModelForSequenceClassification.from_pretrained(model_name)
 sentiment_analyzer = pipeline('sentiment-analysis', model=model, tokenizer=tokenizer)
 
 # NewsAPI settings
-api_key = 'ca55db6d53fb41999503bae5f163f2aa'
+api_key = os.getenv('NEWS_API_KEY')
 
 def fetch_news(stock: str, days: int = 2):
     today = datetime.now().date()
